@@ -1,51 +1,108 @@
 <!---
 {
-  "depends_on": [],
+  "depends_on": ["https://github.com/STEMgraph/474307f2-a30c-4639-9379-298bf1a4c00b"],
   "author": "Stephan Bökelmann",
-  "first_used": "2025-03-17",
-  "keywords": ["learning", "exercises", "education", "practice"]
+  "first_used": "2025-04-01",
+  "keywords": ["git", "ssh", "remote", "repository"]
 }
 --->
 
-# Learning Through Exercises
+# Git: Using Git over SSH on Your Own Remote-Machine
 
 ## 1) Introduction
-Learning by doing is one of the most effective methods to acquire new knowledge and skills. Rather than passively consuming information, actively engaging in problem-solving fosters deeper understanding and long-term retention. By working through structured exercises, students can grasp complex concepts in a more intuitive and applicable way. This approach is particularly beneficial in technical fields like programming, mathematics, and engineering.
 
-### 1.1) Further Readings and Other Sources
-- [The Importance of Practice in Learning](https://www.sciencedirect.com/science/article/pii/S036013151300062X)
-- "The Art of Learning" by Josh Waitzkin
-- [How to Learn Effectively: 5 Key Strategies](https://www.edutopia.org/article/5-research-backed-learning-strategies)
+You've already learned how to initialize a repository, stage and commit changes, and push them to a remote. You've also practiced the difference between local and remote repositories.
+
+In this exercise, you'll take the next step by working with **your own remote machine** using **SSH**. You'll create a Git repository on the remote server and configure your local repository to push to and pull from it. This workflow mimics how software developers collaborate using a central repository server like GitHub — but you're hosting it yourself!
+
+This is a great way to:
+
+- Understand what happens behind hosted Git services
+- Practice with real-world SSH-based Git workflows
+- Gain confidence in navigating both local and remote machines
 
 ## 2) Tasks
-1. **Write a Summary**: Summarize the concept of "learning by doing" in 3-5 sentences.
-2. **Example Identification**: List three examples from your own experience where learning through exercises helped you understand a topic better.
-3. **Create an Exercise**: Design a simple exercise for a topic of your choice that someone else could use to practice.
-4. **Follow an Exercise**: Find an online tutorial that includes exercises and complete at least two of them.
-5. **Modify an Existing Exercise**: Take a basic problem from a textbook or online course and modify it to make it slightly more challenging.
-6. **Pair Learning**: Explain a concept to a partner and guide them through an exercise without giving direct answers.
-7. **Review Mistakes**: Look at an exercise you've previously completed incorrectly. Identify why the mistake happened and how to prevent it in the future.
-8. **Time Challenge**: Set a timer for 10 minutes and try to solve as many simple exercises as possible on a given topic.
-9. **Self-Assessment**: Create a checklist to evaluate your own performance in completing exercises effectively.
-10. **Reflect on Progress**: Write a short paragraph on how this structured approach to exercises has influenced your learning.
 
-<details>
-  <summary>Tip for Task 5</summary>
-  Try making small adjustments first, such as increasing the difficulty slightly or adding an extra constraint.
-</details>
+1. **Connect to Your Remote Machine**
+
+   ```bash
+   ssh <your-user>@<your-remote-host>
+   ```
+
+   - Navigate to or create a directory for your remote Git repositories (e.g., `mkdir -p ~/repos/myproject && cd ~/repos/myproject`)
+   - Initialize a **bare repository**:
+
+     ```bash
+     git init --bare
+     ```
+
+   - Exit the remote session:
+
+     ```bash
+     exit
+     ```
+
+2. **Set Up a Local Repository**
+
+   - On your **local machine**, create a project directory:
+
+     ```bash
+     mkdir myproject && cd myproject
+     git init
+     touch README.md
+     git add README.md
+     git commit -m "Initial commit"
+     ```
+
+   - Add the remote repository using SSH:
+
+     ```bash
+     git remote add origin <your-user>@<your-remote-host>:~/repos/myproject
+     ```
+
+3. **Push Your Work to the Remote**
+
+   ```bash
+   git push -u origin master
+   ```
+
+4. **Clone the Project Elsewhere (Optional)**
+
+   - On a different machine (or a different directory), clone the repo:
+
+     ```bash
+     git clone <your-user>@<your-remote-host>:~/repos/myproject
+     ```
+
+5. **Make a Change and Push Again**
+
+   - Locally, edit the README or add a new file:
+
+     ```bash
+     echo "Hello from SSH" >> README.md
+     git add README.md
+     git commit -m "Update via SSH"
+     git push
+     ```
+
+6. **Pull from Another Machine or Clone Directory**
+
+   - If you cloned elsewhere: run `git pull` to get the latest changes.
 
 ## 3) Questions
-1. What are the main benefits of learning through exercises compared to passive learning?
-2. How do exercises improve long-term retention?
-3. Can you think of a subject where learning through exercises might be less effective? Why?
-4. What role does feedback play in learning through exercises?
-5. How can self-designed exercises improve understanding?
-6. Why is it beneficial to review past mistakes in exercises?
-7. How does explaining a concept to someone else reinforce your own understanding?
-8. What strategies can you use to stay motivated when practicing with exercises?
-9. How can timed challenges contribute to learning efficiency?
-10. How do exercises help bridge the gap between theory and practical application?
+
+- What is the difference between a regular and a bare repository?
+- Why is a bare repository required on the remote?
+- What is the structure of a Git SSH remote URL?
+- What happens if the SSH key or password is not accepted?
+- What output do you get from `git remote -v`?
+- Can you clone your remote repo from another machine?
 
 ## 4) Advice
-Practice consistently and seek out diverse exercises that challenge different aspects of a topic. Combine exercises with reflection and feedback to maximize your learning efficiency. Don't hesitate to adapt exercises to fit your own needs and ensure that you're actively engaging with the material, rather than just going through the motions.
+
+Using Git over SSH to your own machine is a powerful skill — you're not relying on any third-party hosting. Make sure your SSH access is secured with strong keys or passwords. Always double-check file permissions on your remote repo and avoid giving write access to everyone.
+
+This setup is the basis for advanced Git workflows with custom CI/CD pipelines or self-hosted Git servers like Gitea, Gitolite, or GitLab.
+
+Once you're confident, try pushing and pulling between multiple machines to simulate real team workflows!
 
