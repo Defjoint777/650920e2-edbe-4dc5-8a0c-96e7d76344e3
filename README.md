@@ -92,11 +92,22 @@ This is a great way to:
 ## 3) Questions
 
 - What is the difference between a regular and a bare repository?
+- git init creates ur working repository, git init --bare makes repository without working directory.
+- 
 - Why is a bare repository required on the remote?
+- Its a place where everyone is able to push their work.
+- 
 - What is the structure of a Git SSH remote URL?
+- git remote add origin nikita@10.0.0.21:1461/~/repos/myproject
+- 
 - What happens if the SSH key or password is not accepted?
+- connection is rejected?
+- 
 - What output do you get from `git remote -v`?
-- Can you clone your remote repo from another machine?
+- origin  ssh://nikita@10.0.0.21:1461/~/repos/myproject (fetch)
+origin  ssh://nikita@10.0.0.21:1461/~/repos/myproject (push)
+- Can you clone your remote repo from another origin
+  
 
 ## 4) Advice
 
